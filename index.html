@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .quiz-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            color: #333;
+        }
+        .question {
+            margin: 20px 0;
+            font-size: 22px;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            font-size: 28px;
+            font-family: 'Arial', sans-serif;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 90%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            font-size: 22px;
+            margin: 20px 0;
+            color: #28a745;
+        }
+        .score {
+            font-size: 26px;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Arabic Quiz</h1>
+    <div class="question" id="question">Let's start the quiz!</div>
+    <button onclick="startQuiz()">Start Quiz</button>
+    <div class="result" id="result"></div>
+    <div class="score" id="score"></div>
+</div>
+
+<script>
+    let score = 0;
+    let currentQuestion = 0;
+    const questions = [
+        {
+            question: "How do you say 'As-Salamu Alaykum'?",
+            options: ["ٱلسَّلَامُ عَلَيْكُمْ", "مَرْحَبًا", "إِلَى ٱللِّقَاء"],
+            correctAnswer: "ٱلسَّلَامُ عَلَيْكُمْ"
+        },
+        {
+            question: "How do you respond to 'As-Salamu Alaykum'?",
+            options: ["وَعَلَيْكُمُ ٱلسَّلَامُ", "أَنَا بِخَيْرٍ", "إِلَى ٱللِّقَاء"],
+            correctAnswer: "وَعَلَيْكُمُ ٱلسَّلَامُ"
+        },
+        {
+            question: "How do you say 'How are you?' for a male?",
+            options: ["كَيْفَ حَالُكِ؟", "كَيْفَ حَالُكَ؟", "بِخَيْرٍ"],
+            correctAnswer: "كَيْفَ حَالُكَ؟"
+        },
+        {
+            question: "How do you say 'How are you?' for a female?",
+            options: ["كَيْفَ حَالُكِ؟", "كَيْفَ حَالُكَ؟", "ٱلْحَمْدُ لِلَّهِ"],
+            correctAnswer: "كَيْفَ حَالُكِ؟"
+        },
+        {
+            question: "How do you say 'I am fine, Alhamdulillah'?",
+            options: ["بِخَيْرٍ وَٱلْحَمْدُ لِلَّهِ", "وَعَلَيْكُمُ ٱلسَّلَامُ", "كَيْفَ حَالُكَ؟"],
+            correctAnswer: "بِخَيْرٍ وَٱلْحَمْدُ لِلَّهِ"
+        },
+        {
+            question: "How do you say 'What is your name?'?",
+            options: ["مَا ٱسْمُكَ؟", "كَيْفَ حَالُكَ؟", "بِخَيْرٍ"],
+            correctAnswer: "مَا ٱسْمُكَ؟"
+        }
+    ];
+
+    function startQuiz() {
+        score = 0;
+        currentQuestion = 0;
+        document.getElementById('result').innerHTML = '';
+        document.getElementById('score').innerHTML = '';
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (currentQuestion < questions.length) {
+            const q = questions[currentQuestion];
+            const optionsHtml = q.options.map(option => `<button onclick="checkAnswer('${option}')">${option}</button>`).join('');
+            document.getElementById('question').innerHTML = `<p>${q.question}</p>${optionsHtml}`;
+        } else {
+            document.getElementById('question').innerHTML = 'Quiz Complete!';
+            document.getElementById('result').innerHTML = `Your final score is: ${score}/${questions.length}`;
+            document.getElementById('score').innerHTML = '';
+        }
+    }
+
+    function checkAnswer(selectedOption) {
+        const correctAnswer = questions[currentQuestion].correctAnswer;
+        if (selectedOption === correctAnswer) {
+            score++;
+            document.getElementById('result').innerHTML = 'Correct!';
+        } else {
+            document.getElementById('result').innerHTML = `Wrong! The correct answer is: ${correctAnswer}`;
+        }
+        document.getElementById('score').innerHTML = `Score: ${score}`;
+        currentQuestion++;
+        setTimeout(nextQuestion, 1000);
+    }
+</script>
+
+</body>
+</html>
